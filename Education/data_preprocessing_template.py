@@ -3,20 +3,34 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 
-import numpy as np
-import pandas as pd
-import matplotlib as plt
 
 #2.veri onisleme
 #2.1.veri yukleme
-veriler = pd.read_csv('veriler.csv')
+datas = pd.read_csv('datas.csv')
 #pd.read_csv("veriler.csv")
 #test
-print(veriler)
+print(datas)
 
-x = veriler.iloc[:,1:4].values #bağımsız değişkenler
-y = veriler.iloc[:,4:].values #bağımlı değişken
+x = datas.iloc[:,1:4].values #bağımsız değişkenler
+y = datas.iloc[:,4:].values #bağımlı değişken
 print(y)
+
+#verilerin transformu
+from sklearn import preprocessing
+
+country = datas.iloc[:,0:1].values
+
+le = preprocessing.LabelEncoder()
+
+country[:,0] = le.fit_transform(datas.iloc[:,0])
+
+ohe = preprocessing.OneHotEncoder()
+
+country = ohe.fit_transform(country).toarray()
+
+print(country)
+
+#missing datas
 
 #verilerin egitim ve test icin bolunmesi
 from sklearn.model_selection import train_test_split
