@@ -1,10 +1,12 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
+import statsmodels.api as sm
 from sklearn import preprocessing
 from sklearn.impute import SimpleImputer
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
+from sklearn.linear_model import  LinearRegression
 
 
 datas = pd.read_csv('datas.csv')
@@ -65,3 +67,44 @@ x_train, x_test,y_train,y_test = train_test_split(res,result3,test_size=0.33, ra
 sc=StandardScaler()
 X_train = sc.fit_transform(x_train)
 X_test = sc.transform(x_test)
+
+
+regressor = LinearRegression()
+regressor.fit(x_train,y_train)
+y_pred = regressor.predict(x_test)
+
+height = res2.iloc[:,3:4].values
+#print(weight)
+
+left = res2.iloc[:,:3]
+right = res2.iloc[:,4:]
+
+data = pd.concat([left,right],axis=1)
+
+
+x_train, x_test,y_train,y_test = train_test_split(data,height,test_size=0.33, random_state=0)
+regressor2 = LinearRegression()
+regressor2.fit(x_train,y_train)
+y_pred = regressor2.predict(x_test)
+
+
+"""
+this section is very important for showing 
+"Backward" elemination
+"""
+X = np.append(arr = np.ones((22,1)).astype(int),values = data ,axis = 1)
+
+X_l = data.iloc[:,[0,1,2,3,4,5]].values
+X_l = np.array(X_l,dtype=float)
+model = sm.OLS(height,X_l).fit()
+#print(model.summary())
+
+X_l = data.iloc[:,[0,1,2,3,5]].values
+X_l = np.array(X_l,dtype=float)
+model = sm.OLS(height,X_l).fit()
+#print(model.summary())
+
+X_l = data.iloc[:,[0,1,2,3]].values
+X_l = np.array(X_l,dtype=float)
+model = sm.OLS(height,X_l).fit()
+print(model.summary())
