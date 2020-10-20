@@ -6,7 +6,7 @@ from sklearn.preprocessing import PolynomialFeatures
 from sklearn.preprocessing import StandardScaler
 from sklearn.svm import SVR
 
-data = pd.read_csv('../Decision-Tree/salaries.csv')
+data = pd.read_csv('../../Decision-Tree/salaries.csv')
 #print(datas)
 
 x = data.iloc[:,1:2]
