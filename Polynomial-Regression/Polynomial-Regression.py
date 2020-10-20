@@ -4,12 +4,12 @@ import pandas as pd
 from sklearn.linear_model import LinearRegression
 from sklearn.preprocessing import PolynomialFeatures
 
-datas = pd.read_csv('salaries.csv')
+data = pd.read_csv('salaries.csv')
 #print(datas)
 
 
-x = datas.iloc[:,1:2]
-y = datas.iloc[:,2:]
+x = data.iloc[:,1:2]
+y = data.iloc[:,2:]
 X = x.values
 Y = y.values
 
