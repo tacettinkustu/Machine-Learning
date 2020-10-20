@@ -5,8 +5,9 @@ from sklearn.linear_model import LinearRegression
 from sklearn.preprocessing import PolynomialFeatures
 from sklearn.preprocessing import StandardScaler
 from sklearn.svm import SVR
+from sklearn.tree import DecisionTreeRegressor
 
-data = pd.read_csv('../Decision-Tree/salaries.csv')
+data = pd.read_csv('salaries.csv')
 #print(datas)
 
 x = data.iloc[:,1:2]
@@ -31,22 +32,6 @@ plt.scatter(X,Y,color="red")
 plt.plot(X,lin_reg2.predict(poly_reg.fit_transform(X)),color="blue")
 plt.show()
 
-poly_reg = PolynomialFeatures(degree=4)
-x_poly = poly_reg.fit_transform(X)
-lin_reg2 = LinearRegression()
-lin_reg2.fit(x_poly,y)
-plt.scatter(X,Y,color="red")
-plt.plot(X,lin_reg2.predict(poly_reg.fit_transform(X)),color="blue")
-plt.show()
-
-poly_reg = PolynomialFeatures(degree=8)
-x_poly = poly_reg.fit_transform(X)
-lin_reg2 = LinearRegression()
-lin_reg2.fit(x_poly,y)
-plt.scatter(X,Y,color="red")
-plt.plot(X,lin_reg2.predict(poly_reg.fit_transform(X)),color="blue")
-plt.show()
-
 #print(lin_reg.predict([[11]]))
 ##print(lin_reg.predict([[6.6]]))
 
@@ -64,16 +49,18 @@ svr_reg = SVR(kernel='rbf')
 svr_reg.fit(x_scale,y_scale)
 plt.scatter(x_scale,y_scale,color='red')
 plt.plot(x_scale,svr_reg.predict(x_scale),color='blue')
+plt.show()
+
+#print(svr_reg.predict([[11]]))
+#print(svr_reg.predict([[6.6]]))
 
 
-print(svr_reg.predict([[11]]))
-print(svr_reg.predict([[6.6]]))
+#decision tree
+r_dt = DecisionTreeRegressor(random_state=0)
+r_dt.fit(X,Y)
 
+plt.scatter(X,Y,color="red")
+plt.plot(X,r_dt.predict(X),color="blue")
 
-
-
-
-
-
-
-
+print(r_dt.predict([[11]]))
+print(r_dt.predict([[6.6]]))

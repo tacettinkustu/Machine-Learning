@@ -5,13 +5,13 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LinearRegression
 
-datas = pd.read_csv('sales.csv')
+data = pd.read_csv('sales.csv')
 
 #print(datas)
 
-months = datas[["Months"]]
+months = data[["Months"]]
 
-sales = datas[["Sales"]]
+sales = data[["Sales"]]
 
 #print(sales)
 

@@ -8,35 +8,35 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import  LinearRegression
 
 
-datas = pd.read_csv('datas.csv')
+data = pd.read_csv('data.csv')
 #print(datas)
 
 
-weight = datas[["weight"]]
-height = datas[["height"]]
-height_weight = datas [["height","weight"]]
+weight = data[["weight"]]
+height = data[["height"]]
+height_weight = data [["height","weight"]]
 #print(height_weight)
 
 
 imputer = SimpleImputer(missing_values=np.nan,strategy="mean")
-Age = datas.iloc[:,1:4].values
+Age = data.iloc[:,1:4].values
 #print((Age))
 imputer = imputer.fit(Age[:,1:4])
 #print(Age)
 
-country = datas.iloc[:,0:1].values
+country = data.iloc[:,0:1].values
 #print(country)
 le = preprocessing.LabelEncoder()
-country[:,0] = le.fit_transform(datas.iloc[:,0])
+country[:,0] = le.fit_transform(data.iloc[:,0])
 #print(country)
 ohe = preprocessing.OneHotEncoder()
 country = ohe.fit_transform(country).toarray()
 #print(country)
 
 
-sex = datas.iloc[:,-1:].values
+sex = data.iloc[:,-1:].values
 le = preprocessing.LabelEncoder()
-sex[:,-1] = le.fit_transform(datas.iloc[:,-1])
+sex[:,-1] = le.fit_transform(data.iloc[:,-1])
 ohe = preprocessing.OneHotEncoder()
 sex = ohe.fit_transform(sex).toarray()
 #print(sex)
@@ -47,7 +47,7 @@ result = pd.DataFrame(data=country,index=range(22),columns=["fr","tr","us"])
 result2 = pd.DataFrame(data=Age,index=range(22),columns=["height","weight","age"])
 #print(result2)
 
-sex1 = datas.iloc[:,-1].values
+sex1 = data.iloc[:,-1].values
 #print((sex1))
 
 result3 = pd.DataFrame(data=sex[:,:1],index=range(22),columns=["sex"])
@@ -78,10 +78,10 @@ height = res2.iloc[:,3:4].values
 left = res2.iloc[:,:3]
 right = res2.iloc[:,4:]
 
-data = pd.concat([left,right],axis=1)
+data1 = pd.concat([left,right],axis=1)
 
 
-x_train, x_test,y_train,y_test = train_test_split(data,height,test_size=0.33, random_state=0)
+x_train, x_test,y_train,y_test = train_test_split(data1,height,test_size=0.33, random_state=0)
 regressor2 = LinearRegression()
 regressor2.fit(x_train,y_train)
 y_pred = regressor2.predict(x_test)
@@ -91,19 +91,19 @@ y_pred = regressor2.predict(x_test)
 this section is very important for showing 
 "Backward" elemination
 """
-X = np.append(arr = np.ones((22,1)).astype(int),values = data ,axis = 1)
+X = np.append(arr = np.ones((22,1)).astype(int),values = data1 ,axis = 1)
 
-X_l = data.iloc[:,[0,1,2,3,4,5]].values
+X_l = data1.iloc[:,[0,1,2,3,4,5]].values
 X_l = np.array(X_l,dtype=float)
 model = sm.OLS(height,X_l).fit()
 #print(model.summary())
 
-X_l = data.iloc[:,[0,1,2,3,5]].values
+X_l = data1.iloc[:,[0,1,2,3,5]].values
 X_l = np.array(X_l,dtype=float)
 model = sm.OLS(height,X_l).fit()
 #print(model.summary())
 
-X_l = data.iloc[:,[0,1,2,3]].values
+X_l = data1.iloc[:,[0,1,2,3]].values
 X_l = np.array(X_l,dtype=float)
 model = sm.OLS(height,X_l).fit()
 print(model.summary())
