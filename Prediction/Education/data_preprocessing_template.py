@@ -7,7 +7,7 @@ import pandas as pd
 #2.veri onisleme
 #2.1.veri yukleme
 datas = pd.read_csv('data.csv')
-#pd.read_csv("veriler.csv")
+#pd.read_csv("data.csv")
 #test
 print(datas)
 
